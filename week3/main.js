@@ -90,15 +90,12 @@ const canvas = [
 ];
 // 0  1 2   3  4 
 function floodFill(matrix, startXY, newColor, colorToChange) {
-  const x = startXY[1];
-  const y = startXY[0];
+  // the issue we encountered was simply swapped indexes for x & y, derp....
+  const x = startXY[0];
+  const y = startXY[1];
   const currentColor = matrix[y][x];
 
   console.log('xy', x, y, matrix);
-
-  if (x == 4 && y === 1) {
-    matrix[y][x] = 999999;
-  }
 
   if (colorToChange === undefined) {
     colorToChange = currentColor
@@ -111,8 +108,8 @@ function floodFill(matrix, startXY, newColor, colorToChange) {
 
   matrix[y][x] = newColor;
 
-  if (x + 1 < matrix.length) {
-    floodFill(matrix, [x + 1, y], newColor, colorToChange);
+  if (y + 1 < matrix.length) {
+    floodFill(matrix, [x, y + 1], newColor, colorToChange);
   }
 
   if (x - 1 >= 0) {
@@ -123,8 +120,8 @@ function floodFill(matrix, startXY, newColor, colorToChange) {
     floodFill(matrix, [x, y - 1], newColor, colorToChange);
   }
 
-  if (y + 1 < matrix[x].length) {
-    floodFill(matrix, [x, y + 1], newColor, colorToChange);
+  if (x + 1 < matrix[y].length) {
+    floodFill(matrix, [x + 1, y], newColor, colorToChange);
   }
   return matrix;
 }
